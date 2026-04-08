@@ -1,46 +1,62 @@
-# (replace-me: Exercise title)
+# Hands-On: Spec-Driven Development com GitHub Copilot
 
-_(replace-me: One-line description of the exercise)_
+Aprenda Spec-Driven Development (SDD) criando uma API REST de gestão de tarefas usando GitHub Copilot no Visual Studio Code.
 
-## Welcome
+## Bem-vindo
 
-- **Who is this for**: (replace-me: Target audience description)
-- **What you'll learn**: (replace-me: Learning objectives)
-- **What you'll build**: (replace-me: Description of what the learner will create)
-- **Prerequisites**:
-  - (replace-me: Prerequisite skill/exercise)
-  - (replace-me: Other prerequisites)
+- **Para quem é**: Desenvolvedores com conhecimento básico de programação que querem aprender desenvolvimento orientado por especificações
+- **O que você aprenderá**: Fluxo completo de SDD (especificação → design → tarefas → implementação) usando GitHub Copilot
+- **O que você construirá**: API REST completa para gestão de tarefas pessoais com FastAPI
+- **Pré-requisitos**:
+  - Conhecimento básico de Python
+  - Familiaridade com conceitos de API REST
+  - Conta GitHub com Copilot habilitado
 
-- **How long**: This exercise takes less than (replace-me: estimated time) to complete.
+- **Quanto tempo**: Este exercício leva cerca de 45 minutos para completar.
 
-In this exercise, you will:
+Neste exercício, você irá:
 
-1. (replace-me: Learning objective step #1)
-1. (replace-me: Learning objective step #2)
-1. (replace-me: Learning objective step #N)
+1. Ler e entender especificações funcionais
+2. Analisar o design arquitetural proposto
+3. Seguir tarefas passo-a-passo usando GitHub Copilot
+4. Implementar uma API REST completa
+5. Testar todos os endpoints criados
 
+### Como iniciar este exercício
 
-### How to start this exercise
+1. Clique no botão "Open in GitHub Codespaces" ou copie este repositório para sua conta
+2. Abra no GitHub Codespaces (recomendado) ou clone localmente
+3. Navegue para a pasta `hands-on/`
+4. Siga as instruções no `README.md` da pasta hands-on
 
-Simply copy the exercise to your account, then give your favorite Octocat (Mona) **about 20 seconds** to prepare the first lesson, then **refresh the page**.
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/github/skills/exercise-template?devcontainer_path=.devcontainer/devcontainer.json)
 
-<!--  (replace-me: Make sure to edit the URL with proper template_owner, template_name, repo name and description)  -->
-[![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=skills&template_name=exercise-template&owner=%40me&name=skills-<replace-me>&description=Exercise:+Replace+me&visibility=public)
+### Estrutura do Projeto
 
-<details>
-<summary>Having trouble? 🤷</summary><br/>
+```
+hands-on/
+├── requirements.md      # Especificações funcionais
+├── design.md           # Arquitetura e design
+├── tasks.md            # Tarefas passo-a-passo
+├── requirements.txt    # Dependências Python
+├── docs/              # Documentação adicional
+└── app/
+    ├── __init__.py
+    ├── main.py        # Você criará este arquivo
+    ├── models.py      # Você criará este arquivo
+    └── storage.py     # Você criará este arquivo
+```
 
-When copying the exercise, we recommend the following settings:
+### Próximos Passos
 
-- For owner, choose your personal account or an organization to host the repository.
+Após completar o hands-on básico, você pode evoluir a API adicionando:
+- Validações mais rigorosas
+- Filtros e paginação
+- Persistência com banco de dados
+- Autenticação e autorização
+- Testes automatizados
 
-- We recommend creating a public repository, since private repositories will use Actions minutes.
+---
 
-If the exercise isn't ready in 20 seconds, please check the [Actions](../../actions) tab.
-
-- Check to see if a job is running. Sometimes it simply takes a bit longer.
-
-- If the page shows a failed job, please submit an issue. Nice, you found a bug! 🐛
-
-</details>
+*Este hands-on foi criado usando GitHub Copilot e segue as melhores práticas de Spec-Driven Development.*
 
