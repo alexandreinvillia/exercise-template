@@ -1,6 +1,18 @@
 # Hands-On: Spec-Driven Development com GitHub Copilot
 
-## 📋 Estrutura
+## 🎯 Sobre Este Hands-On
+
+Este é um treinamento prático de **Spec-Driven Development (SDD)** usando GitHub Copilot. O foco não é aprender Python ou FastAPI, mas sim praticar o fluxo completo de desenvolvimento orientado por especificações:
+
+**Fluxo SDD:** Especificações → Design → Tarefas → Implementação
+
+### 📋 O Que Você Vai Fazer
+- Ler especificações funcionais (`requirements.md`)
+- Analisar o design arquitetural (`design.md`)
+- Seguir tarefas passo-a-passo (`tasks.md`) usando GitHub Copilot
+- Construir uma API REST completa de gestão de tarefas
+
+### 📋 Estrutura
 
 ```
 hands-on/
@@ -10,7 +22,6 @@ hands-on/
 ├── requirements.txt    # Dependências Python
 ├── docs/              # Documentação adicional
 └── app/
-    ├── __init__.py
     ├── main.py        # Entry point (você vai criar)
     ├── models.py      # Modelos Pydantic (você vai criar)
     └── storage.py     # Camada de dados (você vai criar)
