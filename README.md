@@ -24,12 +24,14 @@ Neste exercício, você irá:
 
 ### Como iniciar este exercício
 
-1. Clique no botão "Open in GitHub Codespaces" ou copie este repositório para sua conta
-2. Abra no GitHub Codespaces (recomendado) ou clone localmente
+1. Se quiser usar este material como um exercício para alunos, primeiro copie este repositório para sua conta com o botão **Use this template** no GitHub.
+2. Em seguida, abra o repositório copiado no GitHub Codespaces.
 3. Navegue para a pasta `hands-on/`
 4. Siga as instruções no `README.md` da pasta hands-on
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/github/skills/exercise-template?devcontainer_path=.devcontainer/devcontainer.json)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?repo=alexandreinvillia/exercise-template&devcontainer_path=.devcontainer/devcontainer.json)
+
+> Se você já tem uma cópia do repositório na sua conta, este botão irá abrir o Codespaces direto nela.
 
 ### Estrutura do Projeto
 
