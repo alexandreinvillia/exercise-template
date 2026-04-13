@@ -1,107 +1,113 @@
 # Hands-On: Spec-Driven Development com GitHub Copilot
 
-## 🎯 Sobre Este Hands-On
+Este material foi ajustado para dois cenários:
 
-Este é um treinamento prático de **Spec-Driven Development (SDD)** usando GitHub Copilot. O foco não é aprender Python ou FastAPI, mas sim praticar o fluxo completo de desenvolvimento orientado por especificações:
+1. Demo curta com cliente, em 15 a 20 minutos.
+2. Workshop guiado com Copilot, em 25 a 30 minutos.
 
-**Fluxo SDD:** Especificações → Design → Tarefas → Implementação
+O objetivo continua o mesmo: mostrar o fluxo de SDD de ponta a ponta.
 
-### 📋 O Que Você Vai Fazer
-- Ler especificações funcionais (`requirements.md`)
-- Analisar o design arquitetural (`design.md`)
-- Seguir tarefas passo-a-passo (`tasks.md`) usando GitHub Copilot
-- Construir uma API REST completa de gestão de tarefas
+especificacao -> design -> tarefas -> implementacao -> validacao
 
-### 📋 Estrutura
+## O que sera demonstrado
+
+- Como transformar requisitos em uma implementacao pequena e objetiva.
+- Como usar o GitHub Copilot para sair de artefatos de especificacao e chegar em codigo executavel.
+- Como validar o resultado com um fluxo completo de API REST.
+
+## Sobre Spec Kit
+
+Spec Kit pode ajudar quando voce quer padronizar a criacao e a manutencao dos artefatos de especificacao em times maiores ou em fluxos mais longos.
+
+Para este hands-on, ele nao e obrigatorio.
+
+Motivo:
+
+- o objetivo aqui e demonstrar o fluxo de SDD, nao a ferramenta de governanca da especificacao
+- os tres artefatos principais ja estao explicitos em requirements.md, design.md e tasks.md
+- adicionar Spec Kit aumentaria a explicacao inicial e consumiria tempo da janela de 25 a 30 minutos
+
+Quando vale incluir Spec Kit em uma proxima versao:
+
+- quando o cliente quiser ver padronizacao de templates
+- quando houver varias squads compartilhando o mesmo processo
+- quando a conversa evoluir de demo para adoção operacional
+
+## Estrutura
 
 ```
 hands-on/
-├── requirements.md      # Especificação funcional
-├── design.md           # Arquitetura e design
-├── tasks.md            # Tarefas passo-a-passo
-├── requirements.txt    # Dependências Python
-├── docs/              # Documentação adicional
+├── requirements.md      # O que a API precisa fazer
+├── design.md            # Como a solucao foi estruturada
+├── tasks.md             # Roteiro guiado para usar com Copilot
+├── requirements.txt     # Dependencias Python
+├── demo_flow.py         # Script unico para demonstracao end-to-end
+├── docs/
+│   └── testes.md        # Testes manuais e via PowerShell
 └── app/
-    ├── main.py        # Entry point (você vai criar)
-    ├── models.py      # Modelos Pydantic (você vai criar)
-    └── storage.py     # Camada de dados (você vai criar)
+    ├── __init__.py
+    ├── main.py
+    ├── models.py
+    └── storage.py
 ```
 
-## 🚀 Como Começar
+## Modo 1: Demo Rapida
 
-### 1. Instale as Dependências
+No terminal, dentro de hands-on:
+
 ```bash
 pip install -r requirements.txt
+python demo_flow.py
 ```
 
-### 2. Leia os Documentos (nesta ordem)
-1. **requirements.md** - Entenda o que precisa ser feito
-2. **design.md** - Entenda como estruturar
-3. **tasks.md** - Siga as tarefas passo-a-passo
+Esse script:
 
-### 3. Implemente as Tarefas
-- Siga cada tarefa em `tasks.md`
-- Use os prompts fornecidos com GitHub Copilot
-- Teste após cada tarefa
+- sobe a API se ela ainda nao estiver rodando
+- executa healthcheck
+- cria tarefas
+- lista, detalha, atualiza e remove
+- encerra o servidor automaticamente quando ele foi iniciado pelo script
 
-### 4. Rode a Aplicação
+## Modo 2: Workshop Guiado com Copilot
+
+1. Leia requirements.md
+2. Leia design.md
+3. Abra tasks.md
+4. Execute as tarefas com o Copilot
+5. Valide com python demo_flow.py
+
+Tempo sugerido:
+
+- 3 minutos para contexto e requisitos
+- 5 minutos para design
+- 12 a 15 minutos para implementacao guiada
+- 5 minutos para validacao e fechamento
+
+## Rodando manualmente
+
 ```bash
+pip install -r requirements.txt
 python -m uvicorn app.main:app --reload
 ```
-A API estará disponível em `http://localhost:8000`
 
-### 5. Teste os Endpoints
-```bash
-# Healthcheck
-curl http://localhost:8000/health
+Links uteis durante a demo:
 
-# Listar tarefas
-curl http://localhost:8000/tarefas
+- API: http://127.0.0.1:8000
+- Swagger: http://127.0.0.1:8000/docs
 
-# Criar tarefa
-curl -X POST http://localhost:8000/tarefas \
-  -H "Content-Type: application/json" \
-  -d '{"titulo":"Minha primeira tarefa"}'
-```
+## Sequencia sugerida para apresentar ao cliente
 
-## 📚 Objetivos de Aprendizado
+1. Mostrar requirements.md e explicar o escopo em menos de 2 minutos.
+2. Mostrar design.md e destacar a simplicidade da arquitetura.
+3. Abrir tasks.md e explicar como o Copilot guia a implementacao.
+4. Executar python demo_flow.py.
+5. Abrir Swagger para reforcar que a API ficou pronta e navegavel.
 
-Ao completar este hands-on, você terá:
-- ✅ Entendido o fluxo Spec-Driven Development (requisitos → design → tarefas → código)
-- ✅ Aprendido a usar GitHub Copilot para acelerar implementação
-- ✅ Construído uma API REST funcional com FastAPI
-- ✅ Praticado boas práticas de separação de responsabilidades
-- ✅ Consolidado conhecimento através de hands-on prático
+## Resultado esperado
 
-## ⏱️ Tempo Estimado
+Ao final da demonstracao, o cliente deve enxergar:
 
-- **Total**: ~45 minutos (9 tarefas × ~5 min cada)
-- Cada tarefa deve levar entre 4-6 minutos
-- Inclui testes e validações
-
-## 💡 Dicas
-
-1. **Leia todo o arquivo tasks.md antes de começar** para ter visão geral
-2. **Use os prompts exatos** fornecidos em cada tarefa - foram otimizados para Copilot
-3. **Teste após cada tarefa** para garantir funcionamento
-4. **Não decore código** - foco é aprender o fluxo SDD
-5. **Experimente com variações** dos prompts depois que terminar
-
-## 🆘 Precisa de Ajuda?
-
-Se um endpoint não funcionar:
-1. Verifique se importou corretamente os módulos
-2. Verifique se o arquivo tem a assinatura de função correta
-3. Verifique status HTTP esperado
-4. Use `python -m uvicorn app.main:app --reload` com `--log-level debug`
-
-## 📖 Referências
-
-- [FastAPI Docs](https://fastapi.tiangolo.com/)
-- [Pydantic Docs](https://docs.pydantic.dev/)
-- [HTTP Status Codes](https://httpwg.org/specs/rfc7231.html#status.codes)
-- [GitHub Copilot Tips](https://bing.com/search?q=github+copilot+tips)
-
----
-
-**Boa sorte com seu hands-on! 🎯**
+- um fluxo claro de SDD
+- uma API funcionando de verdade
+- prompts simples e reaproveitaveis com Copilot
+- uma base pequena o suficiente para discutir em reuniao

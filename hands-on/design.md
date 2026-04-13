@@ -1,109 +1,83 @@
-# Design: API de Gestão de Tarefas
+# Design: API de Gestao de Tarefas
 
-## Arquitetura de Alto Nível
+## Objetivo do design
+
+Manter a arquitetura pequena o suficiente para ser explicada em poucos minutos, mas clara o bastante para mostrar o valor do Spec-Driven Development.
+
+## Arquitetura escolhida
 
 ```
-┌─────────────────┐
-│   Cliente HTTP  │
-└────────┬────────┘
-         │
-    ┌────▼──────┐
-    │  FastAPI  │ (Framework)
-    └────┬──────┘
-         │
-    ┌────▼────────────────┐
-    │   Routes/Endpoints  │ (Controllers)
-    └────┬────────────────┘
-         │
-    ┌────▼────────────────┐
-    │   Service Layer     │ (Business Logic)
-    └────┬────────────────┘
-         │
-    ┌────▼────────────────┐
-    │   In-Memory Store   │ (Data)
-    └─────────────────────┘
+Cliente HTTP
+   |
+FastAPI em app/main.py
+   |
+Modelos Pydantic em app/models.py
+   |
+Armazenamento em memoria em app/storage.py
 ```
+
+Nao existe service layer neste MVP. A decisao foi intencional: reduzir ruído na demonstracao e manter foco no fluxo SDD.
 
 ## Componentes
 
-### 1. **main.py** (Entry Point)
-- Inicializa a aplicação FastAPI
-- Define configurações globais
+### app/main.py
 
-### 2. **models.py** (Data Models)
-```python
-from pydantic import BaseModel
-from datetime import datetime
+- inicializa o FastAPI
+- expõe /health
+- expõe CRUD completo em /tarefas
+- traduz erros de negocio simples para HTTP 404
 
-class TarefaCreate(BaseModel):
-    titulo: str
-    descricao: Optional[str] = None
+### app/models.py
 
-class Tarefa(BaseModel):
-    id: int
-    titulo: str
-    descricao: Optional[str]
-    status: str  # "pendente" ou "concluida"
-    criada_em: datetime
-    atualizada_em: datetime
-```
+- define TarefaCreate
+- define TarefaUpdate
+- define Tarefa
+- restringe status para pendente ou concluida
+- aplica validacao de tamanho nos campos principais
 
-### 3. **storage.py** (Data Layer)
-Simulação de banco de dados em memória:
-- Dicionário que armazena tarefas: `{id: Tarefa}`
-- Gerador de IDs sequenciais
-- Funções CRUD básicas
+### app/storage.py
 
-### 4. **routes.py** (API Endpoints)
-- POST `/tarefas` → criar
-- GET `/tarefas` → listar
-- GET `/tarefas/{id}` → detalhe
-- PUT `/tarefas/{id}` → atualizar
-- DELETE `/tarefas/{id}` → deletar
+- usa dicionario em memoria
+- gera ids sequenciais
+- encapsula operacoes CRUD
+- retorna tarefas ordenadas da mais recente para a mais antiga
 
-### 5. **responses.py** (Handlers)
-Tratamento de erros e respostas padrão:
-- 200: Sucesso
-- 201: Recurso criado
-- 404: Não encontrado
-- 400: Requisição inválida
-- 500: Erro interno
+### demo_flow.py
 
-## Fluxo de Requisição
+- executa o fluxo end-to-end da demonstracao
+- sobe a API automaticamente se necessario
+- faz chamadas HTTP reais
+- imprime respostas de cada etapa
 
-```
-1. Cliente faz requisição HTTP
-   ↓
-2. FastAPI roteia para endpoint correto
-   ↓
-3. Validação automática com Pydantic
-   ↓
-4. Função route chama serviço
-   ↓
-5. Serviço manipula dados no storage
-   ↓
-6. Resposta retorna ao cliente
-```
+## Endpoints
 
-## Stack Tecnológico
+| Metodo | Rota | Uso |
+|--------|------|-----|
+| GET | /health | validar que a API esta no ar |
+| POST | /tarefas | criar tarefa |
+| GET | /tarefas | listar tarefas |
+| GET | /tarefas/{id} | detalhar tarefa |
+| PUT | /tarefas/{id} | atualizar tarefa |
+| DELETE | /tarefas/{id} | remover tarefa |
 
-| Camada | Tecnologia | Propósito |
-|--------|-----------|----------|
-| Framework | FastAPI | API REST moderna |
-| Validação | Pydantic | Schemas e validação |
-| Servidor | Uvicorn | ASGI server |
-| Linguagem | Python 3.10+ | Desenvolvimento rápido |
+## Fluxo de requisicao
 
-## Decisões de Design
+1. O cliente envia JSON para a API.
+2. FastAPI valida a entrada com Pydantic.
+3. O endpoint chama funcoes do storage.
+4. O storage devolve a tarefa criada, alterada, listada ou removida.
+5. O endpoint retorna uma resposta HTTP adequada.
 
-✅ **Simplicidade Primeiro**: Sem ORM, sem autenticação, sem banco real  
-✅ **Modularização**: Separação clara de responsabilidades  
-✅ **Type Hints**: Código legível e self-documented  
-✅ **Pydantic**: Validação de entrada automática  
-✅ **Status HTTP Corretos**: Comunicação clara com cliente
+## Decisoes principais
 
-## Próximas Evolições
+- Simplicidade primeiro: sem banco, sem autenticacao e sem camadas extras.
+- Rastreabilidade: cada endpoint nasce diretamente dos requisitos.
+- Demonstrabilidade: tudo pode ser mostrado em poucos comandos.
+- Evolucao facil: se a conversa com o cliente pedir proxima fase, a troca do storage por banco real e direta.
 
-- **Fase 2**: Adicionar validações mais rigorosas
-- **Fase 3**: Integrar com SQLite
-- **Fase 4**: Adicionar autenticação JWT
+## Possiveis evolucoes
+
+- filtro por status em GET /tarefas
+- persistencia em SQLite
+- testes automatizados com pytest
+- autenticacao

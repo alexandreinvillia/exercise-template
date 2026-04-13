@@ -3,6 +3,17 @@
 ## Visão Geral
 Desenvolver uma API REST que permita gerenciar tarefas pessoais. O sistema deve ser simples, performático e escalável para suportar usuários adicionando, visualizando, atualizando e deletando tarefas.
 
+## Requisito de Demonstração
+
+- O fluxo precisa ser fácil de executar ao vivo, sem dependência de banco de dados ou infraestrutura externa.
+- A solução deve permitir uma demo completa em poucos minutos.
+
+## RF0: Healthcheck
+
+- **O que**: Endpoint para verificar se a API está disponível
+- **Entrada**: nenhuma
+- **Saída**: `{"status": "ok"}`
+
 ## Requisitos Funcionais
 
 ### RF1: Criar Tarefa
@@ -68,6 +79,7 @@ Tarefa {
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
+| GET | `/health` | Verificar saúde da API |
 | POST | `/tarefas` | Criar tarefa |
 | GET | `/tarefas` | Listar todas |
 | GET | `/tarefas/{id}` | Obter detalhes |
@@ -79,3 +91,4 @@ Tarefa {
 - ✅ MVP sem autenticação (Fase 1)
 - ✅ Sem persistência em BD (Fase 1)
 - ✅ Código deve ser simples e legível
+- ✅ Deve ser fácil de demonstrar em reunião

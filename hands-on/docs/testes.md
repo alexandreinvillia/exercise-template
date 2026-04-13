@@ -1,67 +1,48 @@
 # Testes da API de Tarefas
 
-Este arquivo contém scripts para testar a API após implementação.
+## Forma mais simples
 
-## Script Bash de Teste Completo
+Dentro de hands-on, execute:
 
 ```bash
-#!/bin/bash
-
-BASE_URL="http://localhost:8000"
-
-echo "=== Testando API de Tarefas ==="
-
-# 1. Healthcheck
-echo "1. Healthcheck:"
-curl -s $BASE_URL/health | python3 -m json.tool
-echo
-
-# 2. Criar tarefas
-echo "2. Criando tarefas:"
-curl -s -X POST $BASE_URL/tarefas \
-  -H "Content-Type: application/json" \
-  -d '{"titulo":"Estudar Python"}' | python3 -m json.tool
-echo
-
-curl -s -X POST $BASE_URL/tarefas \
-  -H "Content-Type: application/json" \
-  -d '{"titulo":"Praticar FastAPI","descricao":"Hands-on de SDD"}' | python3 -m json.tool
-echo
-
-# 3. Listar tarefas
-echo "3. Listando todas as tarefas:"
-curl -s $BASE_URL/tarefas | python3 -m json.tool
-echo
-
-# 4. Obter tarefa específica
-echo "4. Obtendo tarefa ID 1:"
-curl -s $BASE_URL/tarefas/1 | python3 -m json.tool
-echo
-
-# 5. Atualizar tarefa
-echo "5. Atualizando tarefa ID 1:"
-curl -s -X PUT $BASE_URL/tarefas/1 \
-  -H "Content-Type: application/json" \
-  -d '{"status":"concluida"}' | python3 -m json.tool
-echo
-
-# 6. Deletar tarefa
-echo "6. Deletando tarefa ID 1:"
-curl -s -X DELETE $BASE_URL/tarefas/1 | python3 -m json.tool
-echo
-
-# 7. Verificar deleção
-echo "7. Verificando se tarefa foi deletada:"
-curl -s $BASE_URL/tarefas/1
-echo
-
-echo "=== Teste concluído ==="
+python demo_flow.py
 ```
 
-## Como executar
+Esse script faz a validacao completa do fluxo e nao depende de bash.
 
-1. Salve o script acima como `test_api.sh`
-2. Dê permissão: `chmod +x test_api.sh`
-3. Execute: `./test_api.sh`
+## Teste manual com PowerShell
 
-Ou execute os comandos individualmente no terminal.
+Inicie a API:
+
+```powershell
+python -m uvicorn app.main:app --reload
+```
+
+Em outro terminal PowerShell, execute:
+
+```powershell
+$baseUrl = "http://127.0.0.1:8000"
+
+Invoke-RestMethod -Method Get -Uri "$baseUrl/health"
+
+Invoke-RestMethod -Method Post -Uri "$baseUrl/tarefas" -ContentType "application/json" -Body '{"titulo":"Preparar demo"}'
+
+Invoke-RestMethod -Method Post -Uri "$baseUrl/tarefas" -ContentType "application/json" -Body '{"titulo":"Mostrar SDD","descricao":"Fluxo com Copilot"}'
+
+Invoke-RestMethod -Method Get -Uri "$baseUrl/tarefas"
+
+Invoke-RestMethod -Method Get -Uri "$baseUrl/tarefas/1"
+
+Invoke-RestMethod -Method Put -Uri "$baseUrl/tarefas/1" -ContentType "application/json" -Body '{"status":"concluida"}'
+
+Invoke-RestMethod -Method Delete -Uri "$baseUrl/tarefas/2"
+```
+
+## O que verificar
+
+- /health retorna status ok
+- POST cria tarefas com id e timestamps
+- GET /tarefas retorna a lista ordenada
+- GET /tarefas/1 retorna uma tarefa especifica
+- PUT altera status para concluida
+- DELETE retorna mensagem de sucesso
